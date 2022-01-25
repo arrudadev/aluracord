@@ -43,7 +43,7 @@ module.exports = {
           '/^react/',
           '/^next/',
           'module',
-          '/^@chakra-ui/',
+          '/^@skynexui/',
           ['parent', 'sibling', 'index'],
         ],
         alphabetize: { order: 'asc', ignoreCase: true },
