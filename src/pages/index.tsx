@@ -1,6 +1,7 @@
-import { ChangeEvent, ReactNode, useState } from 'react';
+import { ChangeEvent, FormEvent, ReactNode, useState } from 'react';
 
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 
@@ -29,7 +30,15 @@ const Title = ({ tag, children }: TitleProps) => {
 };
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
   const [username, setUsername] = useState('arrudadev');
+
+  function handleFormSubmit(event: FormEvent) {
+    event.preventDefault();
+
+    router.push(`/chat`);
+  }
 
   return (
     <Box
@@ -77,6 +86,9 @@ const Home: NextPage = () => {
             textAlign: 'center',
             marginBottom: '32px',
           }}
+          // eslint-disable-next-line
+          // @ts-ignore
+          onSubmit={handleFormSubmit}
         >
           <Title tag="h1">Boas vindas de volta!</Title>
 
