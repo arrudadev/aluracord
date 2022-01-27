@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ChangeEvent, ReactNode, useState } from 'react';
 
 import type { NextPage } from 'next';
 
@@ -29,7 +29,7 @@ const Title = ({ tag, children }: TitleProps) => {
 };
 
 const Home: NextPage = () => {
-  const username = 'arrudadev';
+  const [username, setUsername] = useState('arrudadev');
 
   return (
     <Box
@@ -102,6 +102,9 @@ const Home: NextPage = () => {
                 backgroundColor: appConfig.theme.colors.neutrals['800'],
               },
             }}
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              setUsername(event.target.value)
+            }
           />
 
           <Button
