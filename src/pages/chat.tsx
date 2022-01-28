@@ -108,15 +108,17 @@ const Chat: NextPage = () => {
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState<Message[]>([]);
 
-  const handleSendNewMessage = () => {
-    const newMessage: Message = {
-      id: messageList.length + 1,
+  const handleSendNewMessage = async () => {
+    const newMessage: Omit<Message, 'id'> = {
       author: 'arrudadev',
       text: message,
     };
 
-    setMessageList([newMessage, ...messageList]);
+    const response = await supabaseClient.from('messages').insert([newMessage]);
 
+    const insertedMessage = response.data?.[0] as Message;
+
+    setMessageList([insertedMessage, ...messageList]);
     setMessage('');
   };
 
