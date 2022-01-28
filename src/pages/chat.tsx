@@ -1,10 +1,11 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import type { NextPage } from 'next';
 
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 
 import appConfig from '../../config.json';
+import { supabaseClient } from '../services/supabase';
 
 type Message = {
   id: number;
@@ -125,6 +126,16 @@ const Chat: NextPage = () => {
       handleSendNewMessage();
     }
   };
+
+  useEffect(() => {
+    supabaseClient
+      .from('messages')
+      .select('*')
+      .order('id', { ascending: false })
+      .then(response => {
+        setMessageList(response.data as Message[]);
+      });
+  }, []);
 
   return (
     <Box
