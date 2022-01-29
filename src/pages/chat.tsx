@@ -1,6 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 
@@ -105,12 +106,16 @@ const MessageList = ({ messages }: MessageListProps) => {
 };
 
 const Chat: NextPage = () => {
+  const router = useRouter();
+
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState<Message[]>([]);
 
+  const userLoggedIn = router.query.username as string;
+
   const handleSendNewMessage = async () => {
     const newMessage: Omit<Message, 'id'> = {
-      author: 'arrudadev',
+      author: userLoggedIn,
       text: message,
     };
 

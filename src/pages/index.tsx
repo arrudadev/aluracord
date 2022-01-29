@@ -37,7 +37,7 @@ const Home: NextPage = () => {
   function handleFormSubmit(event: FormEvent) {
     event.preventDefault();
 
-    router.push(`/chat`);
+    router.push(`/chat?username=${username}`);
   }
 
   return (
