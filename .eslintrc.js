@@ -78,5 +78,6 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 'off',
     'react/function-component-definition': 'off',
     'react/jsx-no-bind': 'off',
+    'react/no-typos': 'off',
   },
 };
