@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, ReactNode, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -6,28 +6,7 @@ import { useRouter } from 'next/router';
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 
 import appConfig from '../../config.json';
-
-type TitleProps = {
-  tag: string;
-  children: ReactNode;
-};
-
-const Title = ({ tag, children }: TitleProps) => {
-  const Tag: any = tag || 'h1';
-  return (
-    <>
-      <Tag>{children}</Tag>
-
-      <style jsx>{`
-        ${Tag} {
-          color: ${appConfig.theme.colors.neutrals['000']};
-          font-size: 24px;
-          font-weight: 600;
-        }
-      `}</style>
-    </>
-  );
-};
+import { Title } from '../components/Title';
 
 const Home: NextPage = () => {
   const router = useRouter();
