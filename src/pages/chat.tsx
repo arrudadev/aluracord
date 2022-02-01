@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 
 import appConfig from '../../config.json';
+import { Header } from '../components/Header';
 import { supabaseClient } from '../services/supabase';
 
 type Message = {
@@ -16,30 +17,6 @@ type Message = {
 
 type MessageListProps = {
   messages: Message[];
-};
-
-const Header = () => {
-  return (
-    <Box
-      styleSheet={{
-        width: '100%',
-        marginBottom: '16px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }}
-    >
-      <Text variant="heading5">Chat</Text>
-      <Button
-        variant="tertiary"
-        // eslint-disable-next-line
-        // @ts-ignore
-        colorVariant="neutral"
-        label="Logout"
-        href="/"
-      />
-    </Box>
-  );
 };
 
 const MessageList = ({ messages }: MessageListProps) => {
@@ -177,6 +154,7 @@ const Chat: NextPage = () => {
         }}
       >
         <Header />
+
         <Box
           styleSheet={{
             position: 'relative',
