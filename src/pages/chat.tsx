@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 
 import appConfig from '../../config.json';
+import { ButtonSendSticker } from '../components/ButtonSendSticker';
 import { Header } from '../components/Header';
 import { supabaseClient } from '../services/supabase';
 
@@ -74,7 +75,14 @@ const MessageList = ({ messages }: MessageListProps) => {
                 {new Date().toLocaleDateString()}
               </Text>
             </Box>
-            {message.text}
+            {message.text.startsWith(':sticker:') ? (
+              <Image
+                src={message.text.replace(':sticker:', '')}
+                alt={message.text.replace(':sticker:', '')}
+              />
+            ) : (
+              message.text
+            )}
           </Text>
         );
       })}
@@ -90,10 +98,10 @@ const Chat: NextPage = () => {
 
   const userLoggedIn = router.query.username as string;
 
-  const handleSendNewMessage = async () => {
+  const handleSendNewMessage = async (stickerMessage?: string) => {
     const newMessage: Omit<Message, 'id'> = {
       author: userLoggedIn,
-      text: message,
+      text: stickerMessage || message,
     };
 
     const response = await supabaseClient.from('messages').insert([newMessage]);
@@ -109,6 +117,10 @@ const Chat: NextPage = () => {
       event.preventDefault();
       handleSendNewMessage();
     }
+  };
+
+  const handleSendSticker = (sticker: string) => {
+    handleSendNewMessage(`:sticker: ${sticker}`);
   };
 
   useEffect(() => {
@@ -197,6 +209,8 @@ const Chat: NextPage = () => {
                 color: appConfig.theme.colors.neutrals['200'],
               }}
             />
+
+            <ButtonSendSticker onClick={handleSendSticker} />
           </Box>
         </Box>
       </Box>
