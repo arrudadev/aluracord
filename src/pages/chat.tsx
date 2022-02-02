@@ -3,7 +3,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
-import { Box, Text, TextField, Image, Button } from '@skynexui/components';
+import { Box, Text, TextField, Image } from '@skynexui/components';
 
 import appConfig from '../../config.json';
 import { ButtonSendSticker } from '../components/ButtonSendSticker';
@@ -60,8 +60,8 @@ const MessageList = ({ messages }: MessageListProps) => {
                   display: 'inline-block',
                   marginRight: '8px',
                 }}
-                src="https://github.com/arrudadev.png"
-                alt="Alexandre"
+                src={`https://github.com/${message.author}.png`}
+                alt={message.author}
               />
               <Text tag="strong">{message.author}</Text>
               <Text
@@ -98,10 +98,10 @@ const Chat: NextPage = () => {
 
   const userLoggedIn = router.query.username as string;
 
-  const handleSendNewMessage = async (stickerMessage?: string) => {
+  const handleSendNewMessage = async (messageText: string) => {
     const newMessage: Omit<Message, 'id'> = {
       author: userLoggedIn,
-      text: stickerMessage || message,
+      text: messageText,
     };
 
     const response = await supabaseClient.from('messages').insert([newMessage]);
@@ -115,12 +115,23 @@ const Chat: NextPage = () => {
   const handleInputMessageKeyPress = (event: KeyboardEvent) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      handleSendNewMessage();
+      handleSendNewMessage(message);
     }
   };
 
   const handleSendSticker = (sticker: string) => {
     handleSendNewMessage(`:sticker: ${sticker}`);
+  };
+
+  const listenMessages = (
+    handleAddNewMessages: (newMessage: string) => void,
+  ) => {
+    return supabaseClient
+      .from('messages')
+      .on('INSERT', liveResponse => {
+        handleAddNewMessages(liveResponse.new);
+      })
+      .subscribe();
   };
 
   useEffect(() => {
@@ -131,6 +142,16 @@ const Chat: NextPage = () => {
       .then(response => {
         setMessageList(response.data as Message[]);
       });
+
+    const subscription = listenMessages(newMessage => {
+      setMessageList((currentMessageList: any) => {
+        return [newMessage, ...currentMessageList];
+      });
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   return (
