@@ -8,6 +8,7 @@ import { Box } from '@skynexui/components';
 import appConfig from '../../config.json';
 import { Message } from '../@types';
 import { ButtonSendSticker } from '../components/ButtonSendSticker';
+import { ChatBox } from '../components/ChatBox';
 import { Header } from '../components/Header';
 import { Input } from '../components/Input';
 import { MessageList } from '../components/MessageList';
@@ -117,18 +118,7 @@ const Chat: NextPage = () => {
       >
         <Header />
 
-        <Box
-          styleSheet={{
-            position: 'relative',
-            display: 'flex',
-            flex: 1,
-            height: '80%',
-            backgroundColor: appConfig.theme.colors.neutrals['600'],
-            flexDirection: 'column',
-            borderRadius: '5px',
-            padding: '16px',
-          }}
-        >
+        <ChatBox>
           <MessageList messages={messageList} />
 
           <Box
@@ -149,7 +139,7 @@ const Chat: NextPage = () => {
 
             <ButtonSendSticker onClick={handleSendSticker} />
           </Box>
-        </Box>
+        </ChatBox>
       </Box>
     </Box>
   );
