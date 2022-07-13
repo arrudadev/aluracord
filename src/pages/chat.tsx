@@ -9,6 +9,7 @@ import appConfig from '../../config.json';
 import { Message } from '../@types';
 import { ButtonSendSticker } from '../components/ButtonSendSticker';
 import { ChatBox } from '../components/ChatBox';
+import { ChatBoxWrapper } from '../components/ChatBoxWrapper';
 import { Header } from '../components/Header';
 import { Input } from '../components/Input';
 import { MessageList } from '../components/MessageList';
@@ -100,22 +101,7 @@ const Chat: NextPage = () => {
         color: appConfig.theme.colors.neutrals['000'],
       }}
     >
-      <Box
-        styleSheet={{
-          display: 'flex',
-          flexDirection: 'column',
-          flex: 1,
-          boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
-          borderRadius: '5px',
-          backgroundColor: appConfig.theme.colors.neutrals['700'],
-          height: '100%',
-          maxWidth: '95%',
-          // eslint-disable-next-line
-          // @ts-ignore
-          maxHeight: '95vh',
-          padding: '32px',
-        }}
-      >
+      <ChatBoxWrapper>
         <Header />
 
         <ChatBox>
@@ -140,7 +126,7 @@ const Chat: NextPage = () => {
             <ButtonSendSticker onClick={handleSendSticker} />
           </Box>
         </ChatBox>
-      </Box>
+      </ChatBoxWrapper>
     </Box>
   );
 };
