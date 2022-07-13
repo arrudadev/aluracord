@@ -1,13 +1,14 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
-import { Box, Text, TextField, Image } from '@skynexui/components';
+import { Box, Text, Image } from '@skynexui/components';
 
 import appConfig from '../../config.json';
 import { ButtonSendSticker } from '../components/ButtonSendSticker';
 import { Header } from '../components/Header';
+import { Input } from '../components/Input';
 import { supabaseClient } from '../services/supabase';
 
 type Message = {
@@ -112,11 +113,17 @@ const Chat: NextPage = () => {
     setMessage('');
   };
 
-  const handleInputMessageKeyPress = (event: KeyboardEvent) => {
+  const handleInputMessageKeyPress = (
+    event: KeyboardEvent<HTMLInputElement>,
+  ) => {
     if (event.key === 'Enter') {
       event.preventDefault();
       handleSendNewMessage(message);
     }
+  };
+
+  const handleInputMessageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setMessage(event.target.value);
   };
 
   const handleSendSticker = (sticker: string) => {
@@ -209,26 +216,13 @@ const Chat: NextPage = () => {
               alignItems: 'center',
             }}
           >
-            <TextField
-              value={message}
-              onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                setMessage(event.target.value)
-              }
-              // eslint-disable-next-line
-              // @ts-ignore
-              onKeyPress={handleInputMessageKeyPress}
+            <Input
+              name="message"
               placeholder="Insira sua mensagem aqui..."
               type="textarea"
-              styleSheet={{
-                width: '100%',
-                border: '0',
-                resize: 'none',
-                borderRadius: '5px',
-                padding: '6px 8px',
-                backgroundColor: appConfig.theme.colors.neutrals['800'],
-                marginRight: '12px',
-                color: appConfig.theme.colors.neutrals['200'],
-              }}
+              value={message}
+              onChange={handleInputMessageChange}
+              onKeyPress={handleInputMessageKeyPress}
             />
 
             <ButtonSendSticker onClick={handleSendSticker} />
