@@ -1,5 +1,11 @@
 import 'react';
 
+export type Message = {
+  id: number;
+  author: string;
+  text: string;
+};
+
 declare module 'react' {
   interface StyleHTMLAttributes<T> extends React.HTMLAttributes<T> {
     jsx?: boolean;
