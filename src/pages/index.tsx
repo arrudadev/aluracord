@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 
 import appConfig from '../../config.json';
+import { Background } from '../components/Background';
 import { Title } from '../components/Title';
 
 const Home: NextPage = () => {
@@ -20,21 +21,7 @@ const Home: NextPage = () => {
   }
 
   return (
-    <Box
-      styleSheet={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: appConfig.theme.colors.primary['500'],
-        // eslint-disable-next-line
-        // @ts-ignore
-        backgroundImage:
-          'url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-        backgroundBlendMode: 'multiply',
-      }}
-    >
+    <Background>
       <Box
         styleSheet={{
           display: 'flex',
@@ -153,7 +140,7 @@ const Home: NextPage = () => {
         </Box>
         {/* Photo Area */}
       </Box>
-    </Box>
+    </Background>
   );
 };
 

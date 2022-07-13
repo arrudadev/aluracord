@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 
 import { Box } from '@skynexui/components';
 
-import appConfig from '../../config.json';
 import { Message } from '../@types';
+import { Background } from '../components/Background';
 import { ButtonSendSticker } from '../components/ButtonSendSticker';
 import { ChatBox } from '../components/ChatBox';
 import { ChatBoxWrapper } from '../components/ChatBoxWrapper';
@@ -86,21 +86,7 @@ const Chat: NextPage = () => {
   }, []);
 
   return (
-    <Box
-      styleSheet={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: appConfig.theme.colors.primary['500'],
-        // eslint-disable-next-line
-        // @ts-ignore
-        backgroundImage: `url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)`,
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-        backgroundBlendMode: 'multiply',
-        color: appConfig.theme.colors.neutrals['000'],
-      }}
-    >
+    <Background>
       <ChatBoxWrapper>
         <Header />
 
@@ -127,7 +113,7 @@ const Chat: NextPage = () => {
           </Box>
         </ChatBox>
       </ChatBoxWrapper>
-    </Box>
+    </Background>
   );
 };
 
